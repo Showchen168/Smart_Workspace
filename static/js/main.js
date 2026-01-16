@@ -62,8 +62,6 @@ function initSettingsPanel() {
     const settingsOverlay = document.getElementById('settingsOverlay');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-    const clearSettingsBtn = document.getElementById('clearSettingsBtn');
-    const toggleApiKeyBtn = document.getElementById('toggleApiKey');
 
     // 開啟設定面板
     settingsBtn?.addEventListener('click', () => {
@@ -82,25 +80,6 @@ function initSettingsPanel() {
 
     // 儲存設定
     saveSettingsBtn?.addEventListener('click', saveSettings);
-
-    // 清除設定
-    clearSettingsBtn?.addEventListener('click', clearSettings);
-
-    // 切換密碼顯示
-    toggleApiKeyBtn?.addEventListener('click', () => {
-        const apiKeyInput = document.getElementById('apiKeyInput');
-        const icon = toggleApiKeyBtn.querySelector('i');
-
-        if (apiKeyInput.type === 'password') {
-            apiKeyInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            apiKeyInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    });
 }
 
 // 載入已儲存的設定
@@ -109,15 +88,8 @@ function loadSavedSettings() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
             const config = JSON.parse(atob(saved));
-            const apiKeyInput = document.getElementById('apiKeyInput');
             const modelSelect = document.getElementById('modelSelect');
-            const apiStatus = document.getElementById('apiStatus');
 
-            if (config.k && apiKeyInput) {
-                apiKeyInput.value = config.k;
-                updateApiStatus(true);
-                showToast('已載入儲存的設定', 'info');
-            }
             if (config.m && modelSelect) {
                 modelSelect.value = config.m;
             }
@@ -129,23 +101,12 @@ function loadSavedSettings() {
 
 // 儲存設定
 function saveSettings() {
-    const apiKeyInput = document.getElementById('apiKeyInput');
     const modelSelect = document.getElementById('modelSelect');
-
-    if (!apiKeyInput) return;
-
-    const apiKey = apiKeyInput.value.trim();
     const model = modelSelect ? modelSelect.value : 'gemini-2.5-flash-lite';
 
-    if (!apiKey) {
-        showToast('請先輸入 API Key', 'error');
-        return;
-    }
-
     try {
-        const config = { k: apiKey, m: model };
+        const config = { m: model };
         localStorage.setItem(STORAGE_KEY, btoa(JSON.stringify(config)));
-        updateApiStatus(true);
         showToast('設定已儲存', 'success');
 
         // 關閉面板
@@ -153,31 +114,6 @@ function saveSettings() {
         document.getElementById('settingsOverlay')?.classList.remove('active');
     } catch (e) {
         showToast('儲存失敗', 'error');
-    }
-}
-
-// 清除設定
-function clearSettings() {
-    localStorage.removeItem(STORAGE_KEY);
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    if (apiKeyInput) {
-        apiKeyInput.value = '';
-    }
-    updateApiStatus(false);
-    showToast('設定已清除', 'success');
-}
-
-// 更新 API 狀態顯示
-function updateApiStatus(connected) {
-    const apiStatus = document.getElementById('apiStatus');
-    if (!apiStatus) return;
-
-    if (connected) {
-        apiStatus.classList.add('connected');
-        apiStatus.innerHTML = '<i class="fas fa-circle"></i><span>API Key 已設定</span>';
-    } else {
-        apiStatus.classList.remove('connected');
-        apiStatus.innerHTML = '<i class="fas fa-circle"></i><span>尚未設定 API Key</span>';
     }
 }
 
@@ -287,16 +223,6 @@ function handleFile(file) {
 
 // 上傳檔案
 async function uploadFile(file) {
-    // 從全域設定取得 API Key
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
-
-    if (!apiKey) {
-        showToast('請先在設定中輸入 API Key', 'error');
-        document.getElementById('settingsBtn')?.click();
-        return;
-    }
-
     const formData = new FormData();
     formData.append('file', file);
 
@@ -309,7 +235,6 @@ async function uploadFile(file) {
     const modelSelect = document.getElementById('modelSelect');
     const model = modelSelect ? modelSelect.value : 'gemini-2.5-flash-lite';
     formData.append('model', model);
-    formData.append('api_key', apiKey);
 
     try {
         showToast('正在上傳檔案...', 'info');
