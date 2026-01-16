@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initKnowledgeExtractor();
     initModeSelection();
     loadSavedSettings();
+    initThemeManager();
 });
 
 // ==========================================
@@ -527,3 +528,38 @@ function showToast(message, type = 'info') {
         }, 300);
     }, 3000);
 }
+
+// ==========================================
+// 主題切換功能
+// ==========================================
+function initThemeManager() {
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (!themeToggleBtn) return;
+
+    const themeIcon = themeToggleBtn.querySelector('i');
+    const themeStorageKey = '_smart_workspace_theme';
+
+    const applyTheme = (theme) => {
+        if (theme === 'light') {
+            document.body.classList.add('light-mode');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        } else {
+            document.body.classList.remove('light-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+    };
+
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(newTheme);
+        localStorage.setItem(themeStorageKey, newTheme);
+    });
+
+    // 載入儲存的主題
+    const savedTheme = localStorage.getItem(themeStorageKey) || 'dark';
+    applyTheme(savedTheme);
+}
+

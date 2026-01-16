@@ -1260,3 +1260,148 @@ body {
         justify-content: center;
     }
 }
+
+/* ==========================================
+   明亮主題 (Light Mode)
+   ========================================== */
+body.light-mode {
+    --bg-dark: #f1f5f9; /* slate-100 */
+    --bg-darker: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-card-hover: rgba(248, 250, 252, 0.9); /* slate-50 */
+
+    --text-primary: #1e293b; /* slate-800 */
+    --text-secondary: #64748b; /* slate-500 */
+    --text-muted: #94a3b8; /* slate-400 */
+
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-light: #e2e8f0; /* slate-200 */
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+    background: var(--bg-darker);
+    background-image:
+        radial-gradient(ellipse at 10% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 90%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+}
+
+.light-mode .top-nav {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.light-mode .settings-panel {
+    background: #f8fafc; /* slate-50 */
+}
+
+.light-mode .form-input,
+.light-mode .icon-btn,
+.light-mode .settings-btn {
+    background: #e2e8f0; /* slate-200 */
+    border-color: #cbd5e1; /* slate-300 */
+    color: var(--text-primary);
+}
+.light-mode .settings-btn:hover {
+     background: #cbd5e1; /* slate-300 */
+}
+
+.light-mode .form-input:focus {
+    background: #ffffff;
+}
+
+.light-mode .btn-outline {
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+.light-mode .btn-outline:hover {
+     background: rgba(0,0,0,0.05);
+}
+
+.light-mode .btn-ghost {
+    color: var(--text-secondary);
+}
+.light-mode .btn-ghost:hover {
+    background: rgba(0,0,0,0.05);
+    color: var(--text-primary);
+}
+
+.light-mode .upload-area {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+}
+.light-mode .upload-area:hover,
+.light-mode .upload-area.drag-over {
+    background: #f8fafc; /* slate-50 */
+    border-color: var(--primary);
+}
+
+.light-mode .format-badge {
+    background: #e2e8f0; /* slate-200 */
+    color: var(--text-secondary);
+}
+
+.light-mode .mode-card {
+    background: #ffffff;
+    border-color: var(--border-light);
+}
+.light-mode .mode-card:hover {
+    background: #f8fafc;
+}
+.light-mode .mode-card.active {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.light-mode .mode-icon {
+     background: #e2e8f0;
+}
+
+.light-mode .progress-card,
+.light-mode .result-card,
+.light-mode .preview-card,
+.light-mode .feature-card {
+    background: #ffffff;
+    border-color: var(--border-light);
+}
+
+.light-mode .progress-bar-container {
+    background: #e2e8f0;
+}
+
+.light-mode .step i {
+    background: #e2e8f0;
+}
+
+.light-mode .stat-item > i {
+    background: #e2e8f0;
+}
+
+.light-mode .preview-header {
+    background: #f8fafc;
+    border-color: var(--border-light);
+}
+
+.light-mode .preview-card pre {
+    background: #f1f5f9;
+    color: var(--text-secondary);
+}
+
+.light-mode .iframe-container {
+    background: var(--bg-darker);
+}
+
+.light-mode .toast {
+    background: #ffffff;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-lg);
+}
+
+.light-mode .footer {
+    background: #f8fafc;
+    border-color: var(--border-light);
+}
+
+.light-mode .api-status {
+    background: #e2e8f0;
+    color: var(--text-secondary);
+}
