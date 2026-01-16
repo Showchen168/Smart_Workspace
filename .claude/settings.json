@@ -1,0 +1,21 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "permissions": {
+    "allow_file_edit": true,
+    "allow_file_create": true,
+    "allow_shell_commands": true,
+    "allow_mcp_tools": true
+  },
+  "agents": {
+    "tech-lead": {
+      "file": ".claude/agents/tech-lead.md",
+      "triggers": ["/tech", "Tech Lead", "技術", "程式", "code", "debug"]
+    },
+    "business-lead": {
+      "file": ".claude/agents/business-lead.md",
+      "triggers": ["/biz", "Business Lead", "業務", "匯報", "報告", "提案"]
+    }
+  },
+  "skills_path": "skills/",
+  "mcp_config": "mcp/mcp-config.json"
+}

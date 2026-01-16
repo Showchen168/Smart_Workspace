@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能工作台 | Smart Workspace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 頂部導航列 -->
+        <header class="top-nav">
+            <div class="logo">
+                <div class="logo-icon-wrapper">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <div class="logo-text-wrapper">
+                    <span class="logo-text">智能工作台</span>
+                    <span class="logo-subtitle">Smart Workspace</span>
+                </div>
+            </div>
+
+            <nav class="tab-nav">
+                <button class="tab-btn active" data-tab="knowledge-extractor">
+                    <i class="fas fa-book-open"></i>
+                    <span class="tab-label">知識提取器</span>
+                </button>
+                <button class="tab-btn" data-tab="ai-assistant">
+                    <i class="fas fa-robot"></i>
+                    <span class="tab-label">AI 助手</span>
+                </button>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="settings-btn" id="settingsBtn" title="全域設定">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 全域設定面板 -->
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-panel-header">
+                <h3><i class="fas fa-sliders-h"></i> 全域 API 設定</h3>
+                <button class="close-btn" id="closeSettingsBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="settings-panel-body">
+                <div class="form-group">
+                    <label for="apiKeyInput">
+                        <i class="fas fa-key"></i> Gemini API Key
+                    </label>
+                    <div class="input-with-actions">
+                        <input type="password" id="apiKeyInput" placeholder="輸入你的 Gemini API Key" class="form-input">
+                        <button type="button" class="icon-btn" id="toggleApiKey" title="顯示/隱藏">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <small>
+                        <i class="fas fa-external-link-alt"></i>
+                        從 <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a> 取得
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="modelSelect">
+                        <i class="fas fa-microchip"></i> AI 模型
+                    </label>
+                    <select id="modelSelect" class="form-input">
+                        <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite（快速）</option>
+                        <option value="gemini-2.0-flash">Gemini 2.0 Flash（平衡）</option>
+                        <option value="gemini-1.5-flash">Gemini 1.5 Flash（穩定）</option>
+                        <option value="gemini-1.5-pro">Gemini 1.5 Pro（高品質）</option>
+                    </select>
+                </div>
+                <div class="settings-actions">
+                    <button class="btn btn-primary" id="saveSettingsBtn">
+                        <i class="fas fa-save"></i> 儲存設定
+                    </button>
+                    <button class="btn btn-outline" id="clearSettingsBtn">
+                        <i class="fas fa-trash-alt"></i> 清除
+                    </button>
+                </div>
+                <div class="api-status" id="apiStatus">
+                    <i class="fas fa-circle"></i>
+                    <span>尚未設定 API Key</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 設定面板遮罩 -->
+        <div class="settings-overlay" id="settingsOverlay"></div>
+
+        <!-- 分頁內容區 -->
+        <main class="tab-content-wrapper">
+            <!-- 分頁 1: 知識提取器 -->
+            <div class="tab-content active" id="knowledge-extractor">
+                <div class="tool-container">
+                    <!-- 工具標題 -->
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-import"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h1>文件知識提取器</h1>
+                            <p>將 Word/PPT 報告自動轉換為 Dify 知識庫格式</p>
+                        </div>
+                    </div>
+
+                    <!-- 上傳區 -->
+                    <section class="upload-section">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-visual">
+                                <div class="upload-icon-ring">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-particles">
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            <h2>拖曳檔案到此處</h2>
+                            <p>或點擊選擇檔案</p>
+                            <div class="upload-formats">
+                                <span class="format-badge"><i class="fas fa-file-word"></i> .docx</span>
+                                <span class="format-badge"><i class="fas fa-file-powerpoint"></i> .pptx</span>
+                            </div>
+                            <input type="file" id="fileInput" accept=".docx,.pptx" style="display: none;">
+                            <button class="btn btn-primary btn-lg" id="uploadBtn">
+                                <i class="fas fa-folder-open"></i> 選擇檔案
+                            </button>
+                            <span class="upload-limit">最大 50MB</span>
+                        </div>
+
+                        <!-- 模式選擇 -->
+                        <div class="mode-selection">
+                            <div class="mode-card active" data-mode="append">
+                                <div class="mode-icon"><i class="fas fa-layer-group"></i></div>
+                                <div class="mode-info">
+                                    <h4>追加模式</h4>
+                                    <p>累積知識庫，自動合併去重</p>
+                                </div>
+                                <input type="radio" name="mode" value="append" checked>
+                            </div>
+                            <div class="mode-card" data-mode="new">
+                                <div class="mode-icon"><i class="fas fa-file-alt"></i></div>
+                                <div class="mode-info">
+                                    <h4>新建模式</h4>
+                                    <p>重新建立知識庫</p>
+                                </div>
+                                <input type="radio" name="mode" value="new">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 處理進度區 -->
+                    <section class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-card">
+                            <div class="progress-header">
+                                <div class="progress-file">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span id="progressFilename">-</span>
+                                </div>
+                                <span id="progressStatus" class="status-badge">-</span>
+                            </div>
+                            <div class="progress-visual">
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" id="progressBar">
+                                        <div class="progress-glow"></div>
+                                    </div>
+                                </div>
+                                <span class="progress-percent" id="progressPercent">0%</span>
+                            </div>
+                            <p class="progress-message" id="progressMessage">準備中...</p>
+                            <div class="progress-steps">
+                                <div class="step" data-step="parsing">
+                                    <i class="fas fa-file-import"></i>
+                                    <span>解析</span>
+                                </div>
+                                <div class="step" data-step="analyzing">
+                                    <i class="fas fa-brain"></i>
+                                    <span>分析</span>
+                                </div>
+                                <div class="step" data-step="merging">
+                                    <i class="fas fa-code-merge"></i>
+                                    <span>合併</span>
+                                </div>
+                                <div class="step" data-step="completed">
+                                    <i class="fas fa-check"></i>
+                                    <span>完成</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 結果區 -->
+                    <section class="result-section" id="resultSection" style="display: none;">
+                        <div class="result-card">
+                            <div class="result-success">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h2>處理完成</h2>
+                            </div>
+                            <div class="result-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <div class="stat-info">
+                                        <span class="stat-value" id="resultSize">-</span>
+                                        <span class="stat-label">字元</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-clock"></i>
+                                    <div class="stat-info">
+                                        <span class="stat-value" id="resultTime">-</span>
+                                        <span class="stat-label">完成時間</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="result-actions">
+                                <button class="btn btn-success btn-lg" id="downloadBtn">
+                                    <i class="fas fa-download"></i> 下載知識庫
+                                </button>
+                                <button class="btn btn-outline" id="previewBtn">
+                                    <i class="fas fa-eye"></i> 預覽
+                                </button>
+                                <button class="btn btn-ghost" id="newTaskBtn">
+                                    <i class="fas fa-redo"></i> 新任務
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 預覽區 -->
+                    <section class="preview-section" id="previewSection" style="display: none;">
+                        <div class="preview-card">
+                            <div class="preview-header">
+                                <h3><i class="fas fa-code"></i> 內容預覽</h3>
+                                <button class="close-btn" id="closePreviewBtn"><i class="fas fa-times"></i></button>
+                            </div>
+                            <pre id="previewContent"></pre>
+                        </div>
+                    </section>
+
+                    <!-- 功能說明 -->
+                    <section class="features-section">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-magic"></i></div>
+                            <h4>智能提取</h4>
+                            <p>AI 自動識別 17 種企業話術分類</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
+                            <h4>增量更新</h4>
+                            <p>自動合併去重，持續累積知識</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-database"></i></div>
+                            <h4>Dify 相容</h4>
+                            <p>輸出格式完美適配 Dify 知識庫</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- 分頁 2: AI 助手 -->
+            <div class="tab-content" id="ai-assistant">
+                <div class="iframe-container">
+                    <iframe
+                        id="aiAssistantFrame"
+                        src="https://udify.app/chat/GoS7U3xM4JmHgGEw"
+                        title="AI 助手"
+                        allow="microphone"
+                        frameborder="0">
+                    </iframe>
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast 提示 -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- 頁尾 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <span><i class="fas fa-cubes"></i> 智能工作台</span>
+                <span class="divider">|</span>
+                <span>Powered by <i class="fas fa-brain"></i> Show</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
