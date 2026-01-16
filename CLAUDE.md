@@ -7,7 +7,7 @@
 | 項目 | 說明 |
 |------|------|
 | 專案名稱 | Smart Workspace 智能工作台 |
-| 當前版本 | **v1.0.0** |
+| 當前版本 | **v1.1.0** |
 | 版本檔案 | `version.py` |
 | GitHub | https://github.com/Showchen168/Smart_Workspace |
 

@@ -8,16 +8,23 @@
 # MAJOR: 重大變更，不向後相容
 # MINOR: 新功能，向後相容
 # PATCH: Bug 修復，向後相容
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 # 版本名稱
-VERSION_NAME = "Initial Release"
+VERSION_NAME = "Multi-Tool Integration"
 
 # 發布日期
 RELEASE_DATE = "2026-01-16"
 
 # 變更歷史
 CHANGELOG = """
+## v1.1.0 (2026-01-16) - Multi-Tool Integration
+- 新增「工作紀錄中心」整合（Job Management System）
+- 新增「離職面談系統」整合（Resignation System）
+- 分頁數量從 2 個擴充至 4 個
+- iframe 延遲載入優化，提升首頁效能
+- 響應式設計優化，支援行動裝置
+
 ## v1.0.0 (2026-01-16) - Initial Release
 - 文件知識提取器：支援 Word/PPT 解析
 - Gemini AI 智能分析提取

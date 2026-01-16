@@ -26,6 +26,14 @@
                     <i class="fas fa-book-open"></i>
                     <span class="tab-label">知識提取器</span>
                 </button>
+                <button class="tab-btn" data-tab="job-management">
+                    <i class="fas fa-tasks"></i>
+                    <span class="tab-label">工作紀錄</span>
+                </button>
+                <button class="tab-btn" data-tab="resignation-system">
+                    <i class="fas fa-user-check"></i>
+                    <span class="tab-label">離職面談</span>
+                </button>
                 <button class="tab-btn" data-tab="ai-assistant">
                     <i class="fas fa-robot"></i>
                     <span class="tab-label">AI 助手</span>
@@ -244,7 +252,31 @@
                 </div>
             </div>
 
-            <!-- 分頁 2: AI 助手 -->
+            <!-- 分頁 2: 工作紀錄中心 -->
+            <div class="tab-content" id="job-management">
+                <div class="iframe-container">
+                    <iframe
+                        id="jobManagementFrame"
+                        title="工作紀錄中心"
+                        allow="clipboard-read; clipboard-write"
+                        frameborder="0">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- 分頁 3: 離職面談系統 -->
+            <div class="tab-content" id="resignation-system">
+                <div class="iframe-container">
+                    <iframe
+                        id="resignationSystemFrame"
+                        title="離職面談管理系統"
+                        allow="clipboard-read; clipboard-write"
+                        frameborder="0">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- 分頁 4: AI 助手 -->
             <div class="tab-content" id="ai-assistant">
                 <div class="iframe-container">
                     <iframe

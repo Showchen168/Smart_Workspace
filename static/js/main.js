@@ -42,15 +42,36 @@ function initTabNavigation() {
                 targetContent.classList.add('active');
             }
 
-            // 如果切換到 AI 助手分頁，確保 iframe 已載入
-            if (targetTab === 'ai-assistant') {
-                const iframe = document.getElementById('aiAssistantFrame');
-                if (iframe && !iframe.src) {
-                    iframe.src = 'https://udify.app/chat/GoS7U3xM4JmHgGEw';
-                }
-            }
+            // 延遲載入 iframe（切換到分頁時才載入）
+            loadIframeForTab(targetTab);
         });
     });
+}
+
+// 延遲載入 iframe
+function loadIframeForTab(tabId) {
+    const iframeConfig = {
+        'job-management': {
+            id: 'jobManagementFrame',
+            src: 'https://showchen168.github.io/Job-Management-System/'
+        },
+        'resignation-system': {
+            id: 'resignationSystemFrame',
+            src: 'https://showchen168.github.io/resignation-system/#admin-panel'
+        },
+        'ai-assistant': {
+            id: 'aiAssistantFrame',
+            src: 'https://udify.app/chat/GoS7U3xM4JmHgGEw'
+        }
+    };
+
+    const config = iframeConfig[tabId];
+    if (config) {
+        const iframe = document.getElementById(config.id);
+        if (iframe && !iframe.src) {
+            iframe.src = config.src;
+        }
+    }
 }
 
 // ==========================================

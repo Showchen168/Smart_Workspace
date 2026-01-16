@@ -1184,10 +1184,17 @@ body {
         order: 3;
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
     .tab-btn {
-        padding: 10px 16px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .tab-btn i {
+        font-size: 1rem;
     }
 
     .tab-label {
