@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from routes import upload_bp, tasks_bp, download_bp
 from services import create_task_store, DocumentProcessor, shutdown_executor
+from version import VERSION, get_version_info
 
 
 def create_app(config_override: dict | None = None) -> Flask:
@@ -84,13 +85,19 @@ def create_app(config_override: dict | None = None) -> Flask:
     @app.route('/')
     def index():
         """首頁"""
-        return render_template('index.html')
+        return render_template('index.html', version=VERSION)
 
     # 健康檢查
     @app.route('/health')
     def health():
         """健康檢查端點"""
-        return {'status': 'healthy'}, 200
+        return {'status': 'healthy', 'version': VERSION}, 200
+
+    # 版本資訊 API
+    @app.route('/api/version')
+    def version():
+        """版本資訊端點"""
+        return get_version_info(), 200
 
     # 確保必要目錄存在
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -107,7 +114,7 @@ def main():
     atexit.register(shutdown_executor)
 
     print("=" * 60)
-    print("  Smart Workspace")
+    print(f"  Smart Workspace v{VERSION}")
     print("=" * 60)
     print(f"  Server: http://localhost:5000")
     print(f"  Upload: {app.config['UPLOAD_FOLDER']}")

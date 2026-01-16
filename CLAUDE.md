@@ -2,6 +2,39 @@
 
 > **精簡管理，最大效能**
 
+## 【專案資訊】
+
+| 項目 | 說明 |
+|------|------|
+| 專案名稱 | Smart Workspace 智能工作台 |
+| 當前版本 | **v1.0.0** |
+| 版本檔案 | `version.py` |
+| GitHub | https://github.com/Showchen168/Smart_Workspace |
+
+---
+
+## 【版本管理規範】
+
+### 版本號規則（Semantic Versioning）
+```
+MAJOR.MINOR.PATCH
+```
+- **MAJOR**: 重大變更，不向後相容
+- **MINOR**: 新功能，向後相容
+- **PATCH**: Bug 修復，向後相容
+
+### 發布流程
+1. 修改 `version.py` 中的 `VERSION`、`VERSION_NAME`、`RELEASE_DATE`
+2. 更新 `CHANGELOG` 變更歷史
+3. 提交 commit，訊息格式：`Release v1.x.x - 簡短描述`
+4. 推送到 GitHub，Render 會自動部署
+
+### 版本顯示位置
+- 網頁頁尾：`智能工作台 v1.0.0`
+- API `/health`：回傳 version 欄位
+- API `/api/version`：回傳完整版本資訊
+- 終端機啟動訊息
+
 ---
 
 ## 【系統角色】
