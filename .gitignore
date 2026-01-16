@@ -23,6 +23,13 @@ output/
 # Environment
 .env
 .env.local
+.env.*
+
+# Claude Code local settings (may contain sensitive data)
+.claude/settings.local.json
+
+# MCP config (contains API keys)
+mcp/mcp-config.json
 
 # OS
 .DS_Store

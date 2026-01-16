@@ -4,7 +4,7 @@
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your-github-token-here"
       },
       "description": "GitHub Integration - PR, Issues, Repository Management"
     },
@@ -12,8 +12,8 @@
       "command": "npx",
       "args": ["-y", "@anthropic/claude-google-drive-mcp"],
       "env": {
-        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
-        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}"
+        "GOOGLE_CLIENT_ID": "your-google-client-id",
+        "GOOGLE_CLIENT_SECRET": "your-google-client-secret"
       },
       "description": "Google Drive Integration - File Management"
     },
