@@ -131,5 +131,8 @@ def main():
     app.run(debug=True, host='0.0.0.0', port=5000)
 
 
+# 為 Gunicorn 建立應用實例
+app = create_app()
+
 if __name__ == '__main__':
     main()

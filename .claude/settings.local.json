@@ -7,7 +7,11 @@
       "Bash(pip install:*)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: Smart Workspace - AI 文件知識提取工具\n\n功能特色：\n- 支援 Word/PPT 文件解析\n- Gemini AI 智能分析提取\n- Dify 知識庫格式輸出\n- Blueprint 模組化架構\n- Redis/記憶體雙模式任務存儲\n- Rate Limiting 速率限制\n- Pydantic 輸入驗證\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: Smart Workspace - AI 文件知識提取工具\n\n功能特色：\n- 支援 Word/PPT 文件解析\n- Gemini AI 智能分析提取\n- Dify 知識庫格式輸出\n- Blueprint 模組化架構\n- Redis/記憶體雙模式任務存儲\n- Rate Limiting 速率限制\n- Pydantic 輸入驗證\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git config:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

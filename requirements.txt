@@ -19,3 +19,6 @@ redis>=5.0.0
 # 工具庫
 tqdm>=4.66.0
 python-dotenv>=1.0.0
+
+# 生產環境 WSGI 伺服器
+gunicorn>=21.0.0
